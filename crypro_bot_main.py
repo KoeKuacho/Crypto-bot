@@ -6,12 +6,14 @@ import requests
 
 bot = telebot.TeleBot(config.token)
 
-# 'https://www.binance.com/fapi/v1/ticker/24hr'
-
 all_tokens = []
 
 
 def get_all_tokens():
+    """
+    Gets list of tokens from Binance https://www.binance.com/fapi/v1/ticker/24hr
+    :return: list all_tokens
+    """
     url = 'https://www.binance.com/fapi/v1/ticker/24hr'
     response = requests.get(url).json()
     for all_s in response:
@@ -26,6 +28,8 @@ def get_all_tokens():
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
+    """ After 'start' func sends welcome message """
+
     bot.send_message(message.chat.id,
                      "🕺 Let's check how much ₿ or Ripple is worth right now 📈 Or maybe you want to see the cost of TOP🔟 coins. It`s easy.\n"
                      "\nJust tap on the commands: \n"
@@ -37,6 +41,8 @@ def welcome(message):
 
 @bot.message_handler(commands=['btc'])
 def price_btc(message):
+    """ Sends current price of BTC by Binance """
+
     get_all_tokens()
 
     for token in all_tokens:
@@ -48,6 +54,8 @@ def price_btc(message):
 
 @bot.message_handler(commands=['xrp'])
 def price_xrp(message):
+    """ Sends current price of XRP by Binance """
+
     get_all_tokens()
 
     for token in all_tokens:
@@ -59,6 +67,8 @@ def price_xrp(message):
 
 @bot.message_handler(commands=['eth'])
 def price_eth(message):
+    """ Sends current price of ETH by Binance """
+
     get_all_tokens()
 
     for token in all_tokens:
@@ -70,6 +80,8 @@ def price_eth(message):
 
 @bot.message_handler(commands=['top10'])
 def price_top10(message):
+    """ Sends current price of TOP10 coins by Binance """
+
     get_all_tokens()
 
     bot.send_message(message.chat.id, f"1{all_tokens[0]['symbol'].split('USDT')[0]}  = {all_tokens[0]['price']} usdt\n"
@@ -86,4 +98,5 @@ def price_top10(message):
 
 
 if __name__ == '__main__':
+    # bot running
     bot.infinity_polling()
