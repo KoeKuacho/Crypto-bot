@@ -4,6 +4,7 @@ import config
 import telebot
 import requests
 import datetime
+import time
 
 bot = telebot.TeleBot(config.token)
 
@@ -39,6 +40,7 @@ def get_all_tokens():
 def welcome(message):
     """ After 'start' func sends welcome message """
     log(message)
+
     bot.send_message(message.chat.id,
                      "🕺 Let's check how much ₿ or Ripple is worth right now 📈 Or maybe you want to see the cost of TOP🔟 coins. It`s easy.\n"
                      "\nJust tap on the commands: \n"
@@ -54,6 +56,9 @@ def price_btc(message):
     log(message)
     get_all_tokens()
 
+    bot.send_chat_action(message.chat.id, action='typing')
+    time.sleep(1)
+
     for token in all_tokens:
         if 'BTCUSDT' in token['symbol']:
             last_price = '1 BTC = ' + ' ' + token['price'] + ' ' + 'usdt'
@@ -64,9 +69,11 @@ def price_btc(message):
 @bot.message_handler(commands=['xrp'])
 def price_xrp(message):
     """ Sends current price of XRP by Binance """
-
     log(message)
     get_all_tokens()
+
+    bot.send_chat_action(message.chat.id, action='typing')
+    time.sleep(1)
 
     for token in all_tokens:
         if 'XRPUSDT' in token['symbol']:
@@ -78,9 +85,11 @@ def price_xrp(message):
 @bot.message_handler(commands=['eth'])
 def price_eth(message):
     """ Sends current price of ETH by Binance """
-
     log(message)
     get_all_tokens()
+
+    bot.send_chat_action(message.chat.id, action='typing')
+    time.sleep(1)
 
     for token in all_tokens:
         if 'ETHUSDT' in token['symbol']:
@@ -95,6 +104,9 @@ def price_top10(message):
 
     log(message)
     get_all_tokens()
+
+    bot.send_chat_action(message.chat.id, action='typing')
+    time.sleep(1)
 
     bot.send_message(message.chat.id, f"1{all_tokens[0]['symbol'].split('USDT')[0]}  = {all_tokens[0]['price']} usdt\n"
                                       f"1{all_tokens[1]['symbol'].split('USDT')[0]}  = {all_tokens[1]['price']} usdt\n"
