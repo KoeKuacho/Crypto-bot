@@ -41,6 +41,10 @@ def welcome(message):
     """ After 'start' func sends welcome message """
     log(message)
 
+    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAJNWF6eCSYDgIXlUPr1U5_ca406t5FVAAL7BQAClvoSBZdb7eV44WgWGAQ')
+    bot.send_chat_action(message.chat.id, action='typing')
+    time.sleep(2)
+
     bot.send_message(message.chat.id,
                      "🕺 Let's check how much ₿ or Ripple is worth right now 📈 Or maybe you want to see the cost of TOP🔟 coins. It`s easy.\n"
                      "\nJust tap on the commands: \n"
