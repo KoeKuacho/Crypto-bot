@@ -109,6 +109,8 @@ def price_top10(message):
     log(message)
     get_all_tokens()
 
+    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAJNzF6fRPCRXTiwrXw9gHPqAAFWacOGLAACEAYAApb6EgWKFCUqPYiR0BgE')
+
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(1)
 
