@@ -54,11 +54,20 @@ def welcome(message):
                      "/eth - check Ethereum price by Binance")
 
 
+# https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT
+
 @bot.message_handler(commands=['btc'])
 def price_btc(message):
     """ Sends current price of BTC by Binance """
     log(message)
-    get_all_tokens()
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'
+    response = requests.get(url).json()
+    print(response)
+
+    coin_name = response['symbol'].split('USDT')[1]
+    price = response['price'].strip()
+    price_coin = f'1BTC = {coin_name} {price} usdt'
+    print(price_coin)
 
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(1)
