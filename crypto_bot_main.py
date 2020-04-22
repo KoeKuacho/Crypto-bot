@@ -62,53 +62,49 @@ def price_btc(message):
     log(message)
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'
     response = requests.get(url).json()
-    print(response)
 
     coin_name = response['symbol'].split('USDT')[1]
-    price = response['price'].strip()
+    price = float(response['price'])
     price_coin = f'1BTC = {coin_name} {price} usdt'
-    print(price_coin)
 
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(1)
 
-    for token in all_tokens:
-        if 'BTCUSDT' in token['symbol']:
-            last_price = '1 BTC = ' + ' ' + token['price'] + ' ' + 'usdt'
-            bot.send_message(message.chat.id, last_price)
-            all_tokens.clear()
+    bot.send_message(message.chat.id, price_coin)
 
 
 @bot.message_handler(commands=['xrp'])
 def price_xrp(message):
     """ Sends current price of XRP by Binance """
     log(message)
-    get_all_tokens()
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT'
+    response = requests.get(url).json()
+
+    coin_name = response['symbol'].split('USDT')[1]
+    price = float(response['price'])
+    price_coin = f'1XRP = {coin_name} {price} usdt'
 
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(1)
 
-    for token in all_tokens:
-        if 'XRPUSDT' in token['symbol']:
-            last_price = '1 XRP = ' + ' ' + token['price'] + ' ' + 'usdt'
-            bot.send_message(message.chat.id, last_price)
-            all_tokens.clear()
+    bot.send_message(message.chat.id, price_coin)
 
 
 @bot.message_handler(commands=['eth'])
 def price_eth(message):
     """ Sends current price of ETH by Binance """
     log(message)
-    get_all_tokens()
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT'
+    response = requests.get(url).json()
+
+    coin_name = response['symbol'].split('USDT')[1]
+    price = float(response['price'])
+    price_coin = f'1ETH = {coin_name} {price} usdt'
 
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(1)
 
-    for token in all_tokens:
-        if 'ETHUSDT' in token['symbol']:
-            last_price = '1 ETH = ' + ' ' + token['price'] + ' ' + 'usdt'
-            bot.send_message(message.chat.id, last_price)
-            all_tokens.clear()
+    bot.send_message(message.chat.id, price_coin)
 
 
 @bot.message_handler(commands=['top10'])
