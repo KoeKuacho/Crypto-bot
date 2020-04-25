@@ -8,8 +8,6 @@ import time
 
 bot = telebot.TeleBot(config.token)
 
-all_tokens = []
-
 
 def log(message):
     """ Logging users messages """
@@ -17,23 +15,6 @@ def log(message):
     print('<------------------------------------->')
     print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     print(f'Message by - {message.from_user.first_name} {message.from_user.last_name}\n {message.text}')
-
-
-def get_all_tokens():
-    """
-    Gets list of tokens from Binance https://www.binance.com/fapi/v1/ticker/24hr
-    :return: list all_tokens
-    """
-    url = 'https://www.binance.com/fapi/v1/ticker/24hr'
-    response = requests.get(url).json()
-    for all_s in response:
-        token = {
-            'symbol': all_s['symbol'],
-            'price': all_s['lastPrice']
-        }
-        if token not in all_tokens:
-            all_tokens.append(token)
-    return all_tokens
 
 
 @bot.message_handler(commands=['start'])
@@ -46,9 +27,9 @@ def welcome(message):
     time.sleep(2)
 
     bot.send_message(message.chat.id,
-                     "🕺 Let's check how much ₿ or Ripple is worth right now 📈 Or maybe you want to see the cost of TOP🔟 coins. It`s easy.\n"
+                     "🕺 Let's check how much ₿ or Ripple is worth right now 📈 Or maybe you want to see the cost of TOP7 coins. It`s easy.\n"
                      "\nJust tap on the commands: \n"
-                     "/top10 - check TOP10 price crypto by Binance\n"
+                     "/top7 - check TOP7 price crypto by Binance\n"
                      "/btc - check BTC price by Binance\n"
                      "/xrp - check Ripple price by Binance\n"
                      "/eth - check Ethereum price by Binance")
@@ -60,9 +41,9 @@ def welcome(message):
 def price_btc(message):
     """ Sends current price of BTC by Binance """
     log(message)
+
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'
     response = requests.get(url).json()
-
     coin_name = response['symbol'].split('USDT')[1]
     price = float(response['price'])
     price_coin = f'1BTC = {coin_name} {price} usdt'
@@ -77,9 +58,9 @@ def price_btc(message):
 def price_xrp(message):
     """ Sends current price of XRP by Binance """
     log(message)
+
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT'
     response = requests.get(url).json()
-
     coin_name = response['symbol'].split('USDT')[1]
     price = float(response['price'])
     price_coin = f'1XRP = {coin_name} {price} usdt'
@@ -94,9 +75,9 @@ def price_xrp(message):
 def price_eth(message):
     """ Sends current price of ETH by Binance """
     log(message)
+
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT'
     response = requests.get(url).json()
-
     coin_name = response['symbol'].split('USDT')[1]
     price = float(response['price'])
     price_coin = f'1ETH = {coin_name} {price} usdt'
@@ -107,29 +88,61 @@ def price_eth(message):
     bot.send_message(message.chat.id, price_coin)
 
 
-@bot.message_handler(commands=['top10'])
+@bot.message_handler(commands=['top7'])
 def price_top10(message):
-    """ Sends current price of TOP10 coins by Binance """
+    """ Sends current price of TOP7 coins by Binance """
 
     log(message)
-    get_all_tokens()
-
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAJNzF6fRPCRXTiwrXw9gHPqAAFWacOGLAACEAYAApb6EgWKFCUqPYiR0BgE')
 
     bot.send_chat_action(message.chat.id, action='typing')
-    time.sleep(1)
+    time.sleep(0.1)
 
-    bot.send_message(message.chat.id, f"1{all_tokens[0]['symbol'].split('USDT')[0]}  = {all_tokens[0]['price']} usdt\n"
-                                      f"1{all_tokens[1]['symbol'].split('USDT')[0]}  = {all_tokens[1]['price']} usdt\n"
-                                      f"1{all_tokens[2]['symbol'].split('USDT')[0]}  = {all_tokens[2]['price']} usdt\n"
-                                      f"1{all_tokens[3]['symbol'].split('USDT')[0]}  = {all_tokens[3]['price']} usdt\n"
-                                      f"1{all_tokens[4]['symbol'].split('USDT')[0]}  = {all_tokens[4]['price']} usdt\n"
-                                      f"1{all_tokens[5]['symbol'].split('USDT')[0]}  = {all_tokens[5]['price']} usdt\n"
-                                      f"1{all_tokens[6]['symbol'].split('USDT')[0]}  = {all_tokens[6]['price']} usdt\n"
-                                      f"1{all_tokens[7]['symbol'].split('USDT')[0]}  = {all_tokens[7]['price']} usdt\n"
-                                      f"1{all_tokens[8]['symbol'].split('USDT')[0]}  = {all_tokens[8]['price']} usdt\n"
-                                      f"1{all_tokens[9]['symbol'].split('USDT')[0]}  = {all_tokens[9]['price']} usdt\n"
-                                      f"\nCrypto to the moon 🚀")
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'
+    response = requests.get(url).json()
+    btc_name = response['symbol'].split('USDT')[1]
+    price_b_j = float(response['price'])
+    btc_price = f'1BTC = {btc_name} {price_b_j} usdt'
+
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT'
+    response = requests.get(url).json()
+    xrp_name = response['symbol'].split('USDT')[1]
+    price_x_j = float(response['price'])
+    xrp_price = f'1XRP = {xrp_name} {price_x_j} usdt'
+
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT'
+    response = requests.get(url).json()
+    eth_name = response['symbol'].split('USDT')[1]
+    price_e_j = float(response['price'])
+    eth_price = f'1ETH = {eth_name} {price_e_j} usdt'
+
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=BCHUSDT'
+    response = requests.get(url).json()
+    bch_name = response['symbol'].split('USDT')[1]
+    price_bc_j = float(response['price'])
+    bch_price = f'1BCH = {bch_name} {price_bc_j} usdt'
+
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=LTCUSDT'
+    response = requests.get(url).json()
+    ltc_name = response['symbol'].split('USDT')[1]
+    price_l_j = float(response['price'])
+    ltc_price = f'1LTC = {ltc_name} {price_l_j} usdt'
+
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT'
+    response = requests.get(url).json()
+    bnb_name = response['symbol'].split('USDT')[1]
+    price_bn_j = float(response['price'])
+    bnb_price = f'1BNB = {bnb_name} {price_bn_j} usdt'
+
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=EOSUSDT'
+    response = requests.get(url).json()
+    eos_name = response['symbol'].split('USDT')[1]
+    price_e_j = float(response['price'])
+    eos_price = f'1EOS = {eos_name} {price_e_j} usdt'
+
+    bot.send_message(message.chat.id,
+                     f'{btc_price}\n{xrp_price}\n{eth_price}\n{bch_price}\n{ltc_price}\n{bnb_price}\n{eos_price}'
+                     f'\n\nCrypto to the moon 🚀')
 
 
 if __name__ == '__main__':
