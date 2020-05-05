@@ -11,7 +11,6 @@ bot = telebot.TeleBot(config.token)
 
 def log(message):
     """ Logging users messages """
-
     print('<------------------------------------->')
     print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     print(f'Message by - {message.from_user.first_name} {message.from_user.last_name}\n {message.text}')
@@ -32,10 +31,11 @@ def welcome(message):
                      "/top7 - check TOP7 price crypto by Binance\n"
                      "/btc - check BTC price by Binance\n"
                      "/xrp - check Ripple price by Binance\n"
-                     "/eth - check Ethereum price by Binance")
+                     "/eth - check Ethereum price by Binance\n"
+                     "/info - bot info")
 
 
-# https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT
+# https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT sample link for request
 
 @bot.message_handler(commands=['btc'])
 def price_btc(message):
@@ -143,6 +143,29 @@ def price_top10(message):
     bot.send_message(message.chat.id,
                      f'{btc_price}\n{xrp_price}\n{eth_price}\n{bch_price}\n{ltc_price}\n{bnb_price}\n{eos_price}'
                      f'\n\nCrypto to the moon 🚀')
+
+@bot.message_handler(commands=['info'])
+def info(message):
+    """ Sends information about the author  """
+    log(message)
+
+    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAJd-F6w1wOGXu4SoRi3pBgo7Yelzx86AAImBgAClvoSBT54uAwflqC1GQQ')
+
+    bot.send_chat_action(message.chat.id, action='typing')
+    time.sleep(0.2)
+
+    bot.send_message(message.chat.id, f'Hey 🖐 I`m so glad you wanna know more about the project. '
+                                          f'I hope the bot performed everything perfectly 🤖 '
+                                          f'\nI will be happy for a cup of coffee for me ☕')
+
+    bot.send_message(message.chat.id, f'💰 BTC:')
+    bot.send_message(message.chat.id, f'1B549zLRXJQd31gcVFbZZRqyqfeTzNnx33')
+
+    bot.send_message(message.chat.id, f'💰 ETH:')
+    bot.send_message(message.chat.id, f'0x08beDB512392e4Ea5A8080d61F68BEc6bc959188')
+
+    bot.send_message(message.chat.id, f'💰 XRP:')
+    bot.send_message(message.chat.id, f'raq6g4UbK455dBARweSQFDhMSDRwV5FaDE')
 
 
 if __name__ == '__main__':
