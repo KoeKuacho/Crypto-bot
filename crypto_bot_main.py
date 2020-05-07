@@ -13,7 +13,8 @@ def log(message):
     """ Logging users messages """
     print('<------------------------------------->')
     print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    print(f'Message by - {message.from_user.first_name} {message.from_user.last_name}\n {message.text}')
+    print(f'Message by - {message.from_user.first_name} {message.from_user.last_name} (id: {message.from_user.id})\n '
+          f'{message.text}')
 
 
 @bot.message_handler(commands=['start'])
@@ -100,49 +101,50 @@ def price_top10(message):
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'
     response = requests.get(url).json()
-    btc_name = response['symbol'].split('USDT')[1]
+    btc_name = response['symbol'].split('USDT')[0].strip()
     price_b_j = float(response['price'])
-    btc_price = f'1BTC = {btc_name} {price_b_j} usdt'
+    btc_price = f'1{btc_name} = {price_b_j} usdt'
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT'
     response = requests.get(url).json()
-    xrp_name = response['symbol'].split('USDT')[1]
+    xrp_name = response['symbol'].split('USDT')[0].strip()
     price_x_j = float(response['price'])
-    xrp_price = f'1XRP = {xrp_name} {price_x_j} usdt'
+    xrp_price = f'1{xrp_name} = {price_x_j} usdt'
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT'
     response = requests.get(url).json()
-    eth_name = response['symbol'].split('USDT')[1]
+    eth_name = response['symbol'].split('USDT')[0]
     price_e_j = float(response['price'])
-    eth_price = f'1ETH = {eth_name} {price_e_j} usdt'
+    eth_price = f'1{eth_name} = {price_e_j} usdt'
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BCHUSDT'
     response = requests.get(url).json()
-    bch_name = response['symbol'].split('USDT')[1]
+    bch_name = response['symbol'].split('USDT')[0]
     price_bc_j = float(response['price'])
-    bch_price = f'1BCH = {bch_name} {price_bc_j} usdt'
+    bch_price = f'1{bch_name} = {price_bc_j} usdt'
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=LTCUSDT'
     response = requests.get(url).json()
-    ltc_name = response['symbol'].split('USDT')[1]
+    ltc_name = response['symbol'].split('USDT')[0]
     price_l_j = float(response['price'])
-    ltc_price = f'1LTC = {ltc_name} {price_l_j} usdt'
+    ltc_price = f'1{ltc_name} = {price_l_j} usdt'
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT'
     response = requests.get(url).json()
-    bnb_name = response['symbol'].split('USDT')[1]
+    bnb_name = response['symbol'].split('USDT')[0]
     price_bn_j = float(response['price'])
-    bnb_price = f'1BNB = {bnb_name} {price_bn_j} usdt'
+    bnb_price = f'1{bnb_name} = {price_bn_j} usdt'
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=EOSUSDT'
     response = requests.get(url).json()
-    eos_name = response['symbol'].split('USDT')[1]
+    eos_name = response['symbol'].split('USDT')[0]
     price_e_j = float(response['price'])
-    eos_price = f'1EOS = {eos_name} {price_e_j} usdt'
+    eos_price = f'1{eos_name} = {price_e_j} usdt'
 
     bot.send_message(message.chat.id,
                      f'{btc_price}\n{xrp_price}\n{eth_price}\n{bch_price}\n{ltc_price}\n{bnb_price}\n{eos_price}'
                      f'\n\nCrypto to the moon 🚀')
+
 
 @bot.message_handler(commands=['info'])
 def info(message):
@@ -154,9 +156,8 @@ def info(message):
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(0.2)
 
-    bot.send_message(message.chat.id, f'Hey 🖐 I`m so glad you wanna know more about the project. '
-                                          f'I hope the bot performed everything perfectly 🤖 '
-                                          f'\nI will be happy for a cup of coffee for me ☕')
+    bot.send_message(message.chat.id, f'Hey 🖐 I`m so glad that you wanna know more about the project 🤖 '
+                                      f'\nI will be happy for a cup of coffee for me ☕')
 
     bot.send_message(message.chat.id, f'💰 BTC:')
     bot.send_message(message.chat.id, f'1B549zLRXJQd31gcVFbZZRqyqfeTzNnx33')
