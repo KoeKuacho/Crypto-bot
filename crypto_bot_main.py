@@ -45,9 +45,10 @@ def price_btc(message):
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'
     response = requests.get(url).json()
-    coin_name = response['symbol'].split('USDT')[1]
-    price = float(response['price'])
-    price_coin = f'1BTC = {coin_name} {price} usdt'
+    coin_name = response['symbol'].split('USDT')[0]
+    price = str(float(response['price'])) + ' usdt'
+    eq = '= '
+    price_coin = '1{:<4} {:>3} {:<10}'.format(coin_name, eq, price)
 
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(1)
@@ -62,9 +63,10 @@ def price_xrp(message):
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT'
     response = requests.get(url).json()
-    coin_name = response['symbol'].split('USDT')[1]
-    price = float(response['price'])
-    price_coin = f'1XRP = {coin_name} {price} usdt'
+    coin_name = response['symbol'].split('USDT')[0]
+    price = str(float(response['price'])) + ' usdt'
+    eq = '= '
+    price_coin = '1{:<4} {:>3} {:<10}'.format(coin_name, eq, price)
 
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(1)
@@ -79,9 +81,10 @@ def price_eth(message):
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT'
     response = requests.get(url).json()
-    coin_name = response['symbol'].split('USDT')[1]
-    price = float(response['price'])
-    price_coin = f'1ETH = {coin_name} {price} usdt'
+    coin_name = response['symbol'].split('USDT')[0]
+    price = str(float(response['price'])) + ' usdt'
+    eq = '= '
+    price_coin = '1{:<4} {:>3} {:<10}'.format(coin_name, eq, price)
 
     bot.send_chat_action(message.chat.id, action='typing')
     time.sleep(1)
@@ -101,45 +104,53 @@ def price_top10(message):
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'
     response = requests.get(url).json()
-    btc_name = response['symbol'].split('USDT')[0].strip()
-    price_b_j = float(response['price'])
-    btc_price = f'1{btc_name} = {price_b_j} usdt'
+    btc_name = '1' + response['symbol'].split('USDT')[0].strip()
+    price_b_j = str(float(response['price'])) + ' usdt'
+    # btc_price = f'1{btc_name} = {price_b_j} usdt'
+    eq = '= '
+    btc_price = '{:<4} {:>3} {:<10}'.format(btc_name, eq, price_b_j)
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT'
     response = requests.get(url).json()
-    xrp_name = response['symbol'].split('USDT')[0].strip()
-    price_x_j = float(response['price'])
-    xrp_price = f'1{xrp_name} = {price_x_j} usdt'
+    xrp_name = '1' + response['symbol'].split('USDT')[0].strip()
+    price_x_j = str(float(response['price'])) + ' usdt'
+    # xrp_price = f'1{xrp_name} = {price_x_j} usdt'
+    eq = '= '
+    xrp_price = '{:<4} {:>3} {:<10}'.format(xrp_name, eq, price_x_j)
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT'
     response = requests.get(url).json()
-    eth_name = response['symbol'].split('USDT')[0]
-    price_e_j = float(response['price'])
-    eth_price = f'1{eth_name} = {price_e_j} usdt'
+    eth_name = '1' + response['symbol'].split('USDT')[0]
+    price_e_j = str(float(response['price'])) + ' usdt'
+    eq = '= '
+    eth_price = '{:<4} {:>3} {:<10}'.format(eth_name, eq,  price_e_j)
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BCHUSDT'
     response = requests.get(url).json()
     bch_name = response['symbol'].split('USDT')[0]
-    price_bc_j = float(response['price'])
-    bch_price = f'1{bch_name} = {price_bc_j} usdt'
+    price_bc_j = str(float(response['price'])) + ' usdt'
+    eq = '= '
+    bch_price = '1{:<4} {:>3} {:<10}'.format(bch_name, eq, price_bc_j)
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=LTCUSDT'
     response = requests.get(url).json()
-    ltc_name = response['symbol'].split('USDT')[0]
-    price_l_j = float(response['price'])
-    ltc_price = f'1{ltc_name} = {price_l_j} usdt'
+    ltc_name = '1' + response['symbol'].split('USDT')[0]
+    price_l_j = str(float(response['price'])) + ' usdt'
+    eq = '= '
+    ltc_price = '{:<4} {:>3} {:<10}'.format(ltc_name, eq, price_l_j)
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT'
     response = requests.get(url).json()
-    bnb_name = response['symbol'].split('USDT')[0]
-    price_bn_j = float(response['price'])
-    bnb_price = f'1{bnb_name} = {price_bn_j} usdt'
+    bnb_name = '1' + response['symbol'].split('USDT')[0]
+    price_bn_j = str(float(response['price'])) + ' usdt'
+    eq = '= '
+    bnb_price = '{:<4} {:>3} {:<10}'.format(bnb_name, eq, price_bn_j)
 
     url = 'https://api.binance.com/api/v3/ticker/price?symbol=EOSUSDT'
     response = requests.get(url).json()
-    eos_name = response['symbol'].split('USDT')[0]
-    price_e_j = float(response['price'])
-    eos_price = f'1{eos_name} = {price_e_j} usdt'
+    eos_name = '1' + response['symbol'].split('USDT')[0]
+    price_e_j = str(float(response['price'])) + ' usdt'
+    eos_price = '{:<4} {:>3} {:<10}'.format(eos_name, eq, price_e_j)
 
     bot.send_message(message.chat.id,
                      f'{btc_price}\n{xrp_price}\n{eth_price}\n{bch_price}\n{ltc_price}\n{bnb_price}\n{eos_price}'
@@ -170,5 +181,5 @@ def info(message):
 
 
 if __name__ == '__main__':
-    # bot running
+    """bot running"""
     bot.infinity_polling()
